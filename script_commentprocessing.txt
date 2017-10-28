@@ -1,0 +1,134 @@
+Data Description &01
+    <key identifier<3)> &01
+    <country chart(2)> AU
+    <year> 1959
+    <first month/day appearance in that year as No 1(4)> 1203
+    <number of weeks as No1> 04
+    <No 1 count> 11
+&01AU195912030411
+
+Data Description &25
+    <key identifier<3)> &25
+    <country chart(2)> AU
+    <year> 1959
+    <Position on Chart for that year (4)> 0001
+&2519590001
+
+Data Description Grandparent folder Name
+    <year> 1959
+
+Data Description Parent Folder Name
+    <chart type> 01 or 25
+    <country identifier> AU
+    <Decsriptor of Chart > <sp.><Top No 1 singles>
+01AU Top No 1 Singles
+
+KeyId (A)
+'&'$left(%_directory%,4)%_parent_directory%
+
+Position in Comment (B)
+$strstr(%comment%,(A))
+$strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%)
+
+&01 or &25 logical Id(C)
+$mid('&'$left(%_directory%,4),1,3)
+
+(E)
+$eql((C),'&01')
+$eql($mid('&'$left(%_directory%,4),1,3),'&01')
+
+(F)
+$eql((C),'&25')
+$eql($mid('&'$left(%_directory%,4),1,3),'&25')
+
+First Week for &01 (G)
+$mid(%comment%,$add((B),5),8)
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),5),8)
+
+Count As No 1 for &01 (H)
+$mid(%comment%,$add((B),13),2)
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),13),2)
+
+Chart Position for &01
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),15),2)
+
+Chart Position for Top 25 as &25 (I)
+$mid(%comment%,$add((B),5),8)
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),5),8)
+
+Track Position for Top 25 as &25 (I)
+$mid(%comment%,$add((B),5),8)
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),10),3)
+
+DATE %date%
+$if((E),(G) ,$if((F),(I),' '))
+$if($eql($mid('&'$left(%_directory%,4),1,3),'&01'),$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),5),8) ,$if($eql($mid('&'$left(%_directory%,4),1,3),'&25'),$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),5),8),' '))
+
+Build Comment Data for &01 (J)in %comment%
+     construct the %track% field after input of %date% field from Charts
+     construct the %label% field as <No of weeks as No 1 in charts>
+     construct the %title% field as $num(%track%,2)'_W'$num(%label%,2)
+     %comment%$mid('&'$left(%_directory%,4)%_parent_directory%,1,5)%date%$mid(%title%,5,2)$num(%track%,2)';'
+
+Build Data for &25 (K) in %comment%
+     construct the %date% from %year%'00'$num(%track%,2)
+     %comment%$mid('&'$left(%_directory%,4)%_parent_directory%,1,5)%date%';'
+
+Comment from Data %comment%
+
+$if($eql($mid('&'$left(%_directory%,4),1,3),'&25'),%comment%$mid('&'$left(%_directory%,4)%_parent_directory%,1,5)%date%';',$if($eql($mid('&'$left(%_directory%,4),1,3),'&01'),%comment%$mid('&'$left(%_directory%,4)%_parent_directory%,1,5)%date%$mid(%title%,5,2)$num(%track%,2)';','[ERROR];'))
+
+%year% = %_parent_directory%
+%discnumber% = %_parent_directory%
+
+Build Data SUBTITLE
+%title%
+
+%title% for &01
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),15),2)_'W'$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),13),2) %subtitle%
+
+%title% for &25
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),11),2) %subtitle%
+
+
+$mid(%subtitle%,3,1)
+
+
+$left(%albumartist%,$sub($strchr(%albumartist%,'('),2))
+$left(%albumartist%,$sub($strchr(%albumartist%,'('),2))
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),11),2) %subtitle%
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),11),2)_'W'$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),13),2) %subtitle%
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),13),2)_'W'$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),13),2) %subtitle%
+$mid(%comment%,$add($strstr(%comment%,'&'$left(%_directory%,4)%_parent_directory%),5),8)
+
+
+
+$mid('&'$left(%_directory%,4)%_parent_directory%,1,5)%date%$num(%label%,2)$num(%track%,2)';'
+$mid('&'$left(%_directory%,4)%_parent_directory%,1,5)%date%$num(%track%,2)
+
+
+
+%_file_create_datetime_raw%
+
+
+
+
+
+Scan New Record
+%date%_%track%_%dummy% %subtitle% - %albumartist%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
